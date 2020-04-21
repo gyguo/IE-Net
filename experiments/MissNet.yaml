@@ -1,0 +1,52 @@
+BASIC:
+  ROOT_DIR: '/disk3/yangle/diagnose/code'
+  NUM_FOLD: 10
+  SEED: 5
+  EXP_NAME: 'exps_10fold_seed5'
+  WORKERS: 8
+  CREATE_OUTPUT_DIR: True
+  BACKUP_CODES: True
+  BACKUP_LIST: ['lib', 'experiments', 'tools']
+  BACKUP_DIR: 'output/name_tobe_replaced/codes'
+  LOG_DIR: 'logs/name_tobe_replaced'
+  SHOW_CFG: False
+  VERBOSE: True
+  PIN_MEMORY: True
+  CHECKPOINT_DIGITS: 4
+
+
+DATASET:
+  DATA_DIR: 'data/exp1'
+  TRAIN_SPLIT: 'train'
+  VAL_SPLIT: 'val'
+
+
+NETWORK:
+  DATA_DIM: 97
+  FEATURE_DIM: 128
+  PRED_DIM: 1
+  DROPOUT: 0.9
+
+
+TRAIN:
+  LR: 0.001
+  BETAS: [0.9, 0.999]
+  WEIGHT_DECAY: 0.0005
+  BATCH_SIZE: 1
+  EPOCH_NUM: 200
+  LR_DECAY_EPOCHS: []
+  LR_DECAY_FACTOR: 0.1
+  OUTPUT_DIR: 'output/name_tobe_replaced'
+
+
+TEST:
+  BATCH_SIZE: 1
+  EVAL_INTERVAL: 1
+  CLS_SCORE_TH: 0.5
+  RESULT_DIR: 'output/name_tobe_replaced'
+
+
+CUDNN:
+  BENCHMARK: False
+  DETERMINISTIC: True
+  ENABLE: True
