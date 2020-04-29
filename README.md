@@ -49,4 +49,4 @@ Our model achieves the following performance on COVID-19 dataset:
 
 |                    |    Accuracy       |    Recall      |
 | ------------------ |------------------ | -------------- |
-|    Our model       |     94.56%        |    90.48%      |
+|    Our model       |     98.72%        |    99.05%      |

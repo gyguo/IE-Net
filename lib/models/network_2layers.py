@@ -11,7 +11,7 @@ class MissNet(nn.Module):
         self.fc_feat2 = nn.Linear(in_features=cfg.NETWORK.FEATURE_DIM, out_features=cfg.NETWORK.FEATURE_DIM)
         self.fc_cls1 = nn.Linear(in_features=cfg.NETWORK.FEATURE_DIM, out_features=cfg.NETWORK.FEATURE_DIM)
         self.fc_cls2 = nn.Linear(in_features=cfg.NETWORK.FEATURE_DIM, out_features=cfg.NETWORK.PRED_DIM)
-        self.embedding_vector = nn.Parameter(torch.randn((cfg.NETWORK.FEATURE_DIM, 1))).float().cuda()
+        # self.embedding_vector = nn.Parameter(torch.randn((cfg.NETWORK.FEATURE_DIM, 1))).float().cuda()
         self.dropout = nn.Dropout(p=cfg.NETWORK.DROPOUT)
         self.lrelu = nn.LeakyReLU()
         
@@ -20,7 +20,9 @@ class MissNet(nn.Module):
         feature = self.fc_feat2(feature1)
         # unsqueeze
         feature_uns = torch.unsqueeze(feature, dim=0)
-        embedding = torch.unsqueeze(self.embedding_vector, dim=0)
+        # embedding = torch.unsqueeze(self.embedding_vector, dim=0)
+        embedding = torch.sum(feature_uns, dim=1)
+        embedding = torch.unsqueeze(embedding, dim=2)
         weight = torch.matmul(feature_uns, embedding)  # [1, N, 1]
         weight = torch.squeeze(weight, dim=0)  # [N, 1]
         # weight_norm = self.softmax(weight)
