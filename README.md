@@ -45,8 +45,8 @@ The comparison experiments are in
 
 ## Results
 
-Our model achieves the following performance on COVID-19 dataset:
+For 10-fold cross validation, our model achieves the following performance on COVID-19 dataset:
 
 |                    |    Accuracy       |    Recall      |
 | ------------------ |------------------ | -------------- |
-|    Our model       |     98.72%        |    99.05%      |
+|    Our model       |   94.80±1.98      |  92.79±3.07    |
