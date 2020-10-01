@@ -50,3 +50,6 @@ For 10-fold cross validation, our model achieves the following performance on CO
 |                    |    Accuracy       |    Recall      |
 | ------------------ |------------------ | -------------- |
 |    Our model       |   94.80±1.98      |  92.79±3.07    |
+
+## gitee
+code has also been released in [gitee](https://gitee.com/gyguo95/IE-Net)
