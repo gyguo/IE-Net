@@ -102,11 +102,6 @@ def main():
             if epoch % cfg.TEST.EVAL_INTERVAL == 0:
                 acc, recall, auc, precision, f1 = evaluate(cfg, val_loader, model)
                 value_metric = (precision + recall) / 2
-                if cfg.BASIC.VERBOSE:
-                    print('test_acc: %f, recall: %f' % (acc, recall))
-                writer.add_scalar('test_acc', acc, epoch)
-                writer.add_scalar('recall', recall, epoch)
-                writer.add_scalar('mean', value_metric, epoch)
 
                 # save model
                 if best_metric < value_metric:
