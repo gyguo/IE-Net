@@ -22,7 +22,7 @@ class WtalDataset(Dataset):
     def __init__(self, cfg, split):
         self.split = split
         self.train_split = cfg.DATASET.TRAIN_SPLIT
-        self.base_dir = os.path.join(cfg.BASIC.ROOT_DIR, cfg.DATASET.DATA_DIR, split)
+        self.base_dir = os.path.join(cfg.DATASET.DATA_DIR, split)
         self.datas = self._load_dataset()
 
     def __len__(self):

@@ -1,14 +1,11 @@
 BASIC:
-  ROOT_DIR: '/disk3/yangle/diagnose/code'
+  ROOT_DIR: '../'
   NUM_FOLD: 10
-  SEED: 5
-  EXP_NAME: 'exps_10fold_seed5'
+  SEED: 0
   WORKERS: 8
   CREATE_OUTPUT_DIR: True
   BACKUP_CODES: True
   BACKUP_LIST: ['lib', 'experiments', 'tools']
-  BACKUP_DIR: 'output/name_tobe_replaced/codes'
-  LOG_DIR: 'logs/name_tobe_replaced'
   SHOW_CFG: False
   VERBOSE: True
   PIN_MEMORY: True
@@ -16,7 +13,7 @@ BASIC:
 
 
 DATASET:
-  DATA_DIR: 'data/exp1'
+  DATASET_DIR: '../data/feature_original'
   TRAIN_SPLIT: 'train'
   VAL_SPLIT: 'val'
 
@@ -36,14 +33,12 @@ TRAIN:
   EPOCH_NUM: 200
   LR_DECAY_EPOCHS: []
   LR_DECAY_FACTOR: 0.1
-  OUTPUT_DIR: 'output/name_tobe_replaced'
 
 
 TEST:
   BATCH_SIZE: 1
   EVAL_INTERVAL: 1
   CLS_SCORE_TH: 0.5
-  RESULT_DIR: 'output/name_tobe_replaced'
 
 
 CUDNN:

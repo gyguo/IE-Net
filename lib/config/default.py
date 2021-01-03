@@ -1,22 +1,24 @@
 from easydict import EasyDict as edict
 import yaml
+import datetime
 
 
 config = edict()
 
 # basic
 config.BASIC = edict()
+config.BASIC.TIME = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M')
 config.BASIC.ROOT_DIR = ''
 config.BASIC.NUM_FOLD = 1
 config.BASIC.SEED = 0
-config.BASIC.EXP_NAME = ''
 config.BASIC.LOG_DIR = ''
+config.BASIC.CKPT_DIR = ''
 config.BASIC.WORKERS = 1
 config.BASIC.CREATE_OUTPUT_DIR = False
 config.BASIC.PIN_MEMORY = True
 config.BASIC.SHOW_CFG = False
 config.BASIC.BACKUP_CODES = True
-config.BASIC.BACKUP_LIST = ['lib']
+config.BASIC.BACKUP_LIST = ['lib', 'experiments', 'tools']
 config.BASIC.BACKUP_DIR = ''
 config.BASIC.VERBOSE = False
 # digits for saved checkpoint, e.g, 01.pth, 001.pth, etc.
@@ -30,6 +32,7 @@ config.CUDNN.ENABLE = True
 
 # dataset
 config.DATASET = edict()
+config.DATASET.DATASET_DIR = ''
 config.DATASET.DATA_DIR = ''
 config.DATASET.TRAIN_SPLIT = ''
 config.DATASET.VAL_SPLIT = ''
@@ -111,7 +114,7 @@ def update_config(cfg_file):
 
 
 if __name__ == '__main__':
-    cfg_file = '/home/yangle/zhuoyan/experiments/WActLocBaseLine/THUMOS/wtal.yaml'
+    cfg_file = '../../experiments/wtal.yaml'
     update_config(cfg_file)
     print(config)
 

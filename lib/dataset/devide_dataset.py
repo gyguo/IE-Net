@@ -7,11 +7,11 @@ import copy
 
 def parser_args():
     parser = argparse.ArgumentParser(description='devide dataset into train and validation')
-    parser.add_argument('-train_perc', default=0.8)
-    parser.add_argument('-pos_dir', default='/disk3/yangle/diagnose/code/data/feature_original/positive')
-    parser.add_argument('-neg_dir', default='/disk3/yangle/diagnose/code/data/feature_original/negative')
-    parser.add_argument('-train_dir', default='/disk3/yangle/diagnose/code/data')
-    parser.add_argument('-val_dir', default='/disk3/yangle/diagnose/code/data')
+    parser.add_argument('-train_perc', default=0.9)
+    parser.add_argument('-pos_dir', default='feature_original/positive')
+    parser.add_argument('-neg_dir', default='feature_original/negative')
+    parser.add_argument('-train_dir', default='data')
+    parser.add_argument('-val_dir', default='data')
     args = parser.parse_args()
     return args
 
@@ -59,27 +59,28 @@ def separate_names(name_set, num_set):
     return all_n_dev
 
 
-def devide_multiple_sets(num_set, exp_names, seed_name):
+def devide_multiple_sets(num_set, exp_names, cfg):
     args = parser_args()
-    train_dir_ori = copy.deepcopy(args.train_dir)
-    val_dir_ori = copy.deepcopy(args.val_dir)
+    dir_ori = cfg.DATASET.CKPT_DIR
     # update args
     args.train_perc = 1 - 1 / num_set
     # exp_names = [str(i) for i in range(num_set)]
     # exp_names = ['exp_'+s for s in exp_names]
 
     # dispose positive
+    args.pos_dir = os.path.join(cfg.DATASET.DATASET_DIR, 'positive')
     file_set = os.listdir(args.pos_dir)
     all_pos_dev = separate_names(file_set, num_set)
     # dispose negative
+    args.neg_dir = os.path.join(cfg.DATASET.DATASET_DIR, 'negative')
     file_set = os.listdir(args.neg_dir)
     all_neg_dev = separate_names(file_set, num_set)
 
     for exp_name, pos_dev, neg_dev in zip(exp_names, all_pos_dev, all_neg_dev):
         print(exp_name)
         # update and make directory
-        args.train_dir = os.path.join(train_dir_ori, seed_name, exp_name, 'train')
-        args.val_dir = os.path.join(val_dir_ori, seed_name, exp_name, 'val')
+        args.train_dir = os.path.join(dir_ori, 'data', exp_name, 'train')
+        args.val_dir = os.path.join(dir_ori, 'data', exp_name, 'val')
         prepare_dir(args.train_dir)
         prepare_dir(args.val_dir)
 

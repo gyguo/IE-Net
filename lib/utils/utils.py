@@ -46,7 +46,7 @@ def save_best_model(cfg, epoch, model, optimizer):
              'state_dict': model.state_dict(),
              'optimizer': optimizer.state_dict()}
     save_name = 'checkpoint_'+'best'+'.pth'
-    save_file = os.path.join(cfg.BASIC.ROOT_DIR, cfg.TRAIN.OUTPUT_DIR, save_name)
+    save_file = os.path.join(cfg.TRAIN.OUTPUT_DIR, save_name)
     torch.save(state, save_file)
     if cfg.BASIC.VERBOSE:
         print('save model: %s' % save_file)

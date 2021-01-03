@@ -1,9 +1,9 @@
 # IE-Net
- 
+
 ## This repository is the official implementation of [Eliminating Indefiniteness of Clinical Spectrum for Better Screening COVID-19]. 
 
 
-## Requirements
+### Requirements
 
 To install the environment via Anaconda:
 
@@ -11,8 +11,11 @@ To install the environment via Anaconda:
 conda env create -f environment.yaml
 ```
 
+### Dataset
 
-## Training
+https://www.kaggle.com/einsteindata4u/covid19
+
+### Training and Evaluation
 
 To train the models in this paper, run this command:
 
@@ -21,31 +24,26 @@ cd ./tools
 python main_multiple.py
 ```
 
-## Evaluation
 
-To evaluate the models in this paper, run this command:
-
-```eval
-cd ./tools
-python eval.py
-```
-
-
-## Pre-trained Models & Visualizations
+### Best Models
 
 The best performed model is in 
 ```
 ./checkpoint_best.pth
 ```
 
+### Comparison 
+
 The comparison experiments are in
+
 ```
-./comparison
+cd ./comparison
+python comparison_experiments_fill_0_multimetric.py
 ```
 
-## Results
+### Results
 
-For 10-fold cross validation, our model achieves the following performance on COVID-19 dataset:
+For 10-fold cross validation, our model achieves the following performance on COVID-19 Clinical  dataset:
 
 |                    |    Accuracy       |    Recall      |
 | ------------------ |------------------ | -------------- |
