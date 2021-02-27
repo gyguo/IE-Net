@@ -1,6 +1,6 @@
 # IE-Net
 
-## This repository is the official implementation of [Eliminating Indefiniteness of Clinical Spectrum for Better Screening COVID-19]. 
+## This repository is the official implementation of "Eliminating Indefiniteness of Clinical Spectrum for Better Screening COVID-19", which have been accepted by IEEE Journal of Biomedical and Health Informatics (JBHI). 
 
 
 ### Requirements
