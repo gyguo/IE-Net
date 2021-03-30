@@ -2,6 +2,7 @@ import os
 os.environ['OMP_NUM_THREADS'] = '1'
 os.environ['CUDA_VISIBLE_DEVICES'] = '6'
 import argparse
+import pprint
 import torch
 from torch.utils.data import DataLoader
 import torch.optim as optim
@@ -11,9 +12,9 @@ import numpy as np
 import _init_paths
 from config.default import config as cfg
 from config.default import update_config
-import pprint
-from models.network_2layers import MissNet
-from dataset.dataset import WtalDataset
+
+from models.network_2layers import IENet
+from dataset.dataset import ClinicalDataset
 from dataset.devide_dataset import devide_multiple_sets
 from core.train_eval import train, evaluate
 from core.functions import prepare_env, fix_random_seed_all
@@ -23,9 +24,8 @@ from utils.utils import decay_lr, save_best_model, save_best_record_txt
 
 def args_parser():
     parser = argparse.ArgumentParser(description='weakly supervised action localization baseline')
-    parser.add_argument('-cfg', help='Experiment config file', default='../experiments/MissNet.yaml')
-    parser.add_argument('-gpu_id', default='6')
-    parser.add_argument('-seed_name', default='wo_softmax_10fold_seed0_emb_pr')
+    parser.add_argument('-cfg', help='Experiment config file', default='../experiments/IENet.yaml')
+    parser.add_argument('-seed_name', default='IENet_10fold_seed0')
     args = parser.parse_args()
     return args
 
@@ -34,8 +34,10 @@ def main():
     # update parameters
     args = args_parser()
     update_config(args.cfg)
-
     fix_random_seed_all(cfg)
+
+    device = torch.device("cuda")
+    assert torch.cuda.is_available(), "CUDA is not available"
    
     num_fold = cfg.BASIC.NUM_FOLD
     exp_names = [str(i) for i in range(num_fold)]
@@ -51,7 +53,6 @@ def main():
     score_array = np.zeros((5, num_fold))
 
     for iexp, name in enumerate(exp_names):
-        # new_str = 'experiments' + '/' + name
 
         # data, output, logs, results
         cfg.DATASET.DATA_DIR = os.path.join(cfg.DATASET.CKPT_DIR, 'data', name)
@@ -69,16 +70,16 @@ def main():
         writer = SummaryWriter(log_dir=os.path.join(cfg.BASIC.LOG_DIR))
 
         # dataloader
-        train_dset = WtalDataset(cfg, cfg.DATASET.TRAIN_SPLIT)
+        train_dset = ClinicalDataset(cfg, cfg.DATASET.TRAIN_SPLIT)
         train_loader = DataLoader(train_dset, batch_size=cfg.TRAIN.BATCH_SIZE, shuffle=True,
                                   num_workers=cfg.BASIC.WORKERS, pin_memory=cfg.BASIC.PIN_MEMORY)
-        val_dset = WtalDataset(cfg, cfg.DATASET.VAL_SPLIT)
+        val_dset = ClinicalDataset(cfg, cfg.DATASET.VAL_SPLIT)
         val_loader = DataLoader(val_dset, batch_size=cfg.TEST.BATCH_SIZE, shuffle=False,
                                 num_workers=cfg.BASIC.WORKERS, pin_memory=cfg.BASIC.PIN_MEMORY)
 
         # network
-        model = MissNet(cfg)
-        model.cuda()
+        model = IENet(cfg)
+        model.to(device)
 
         # optimizer
         optimizer = optim.Adam(model.parameters(), lr=cfg.TRAIN.LR, betas=cfg.TRAIN.BETAS, weight_decay=cfg.TRAIN.WEIGHT_DECAY)
@@ -101,11 +102,12 @@ def main():
 
             if epoch % cfg.TEST.EVAL_INTERVAL == 0:
                 acc, recall, auc, precision, f1 = evaluate(cfg, val_loader, model)
-                value_metric = (precision + recall) / 2
+                # value_metric = (precision + recall) / 2
+                value_metric = f1
 
                 # save model
                 if best_metric < value_metric:
-                    info = [epoch, acc, recall, value_metric]
+                    info = [epoch, acc, recall, auc, precision, f1]
                     save_best_record_txt(info, os.path.join(cfg.TEST.RESULT_DIR, "best_record.txt"))
                     save_best_model(cfg, epoch=epoch, model=model, optimizer=optimizer)
                     best_metric = value_metric

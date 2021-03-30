@@ -13,8 +13,8 @@ def parser_args():
     parser = argparse.ArgumentParser(description='comparison experiments')
     parser.add_argument('-excel_file', default='./dataset_fill_0.xlsx')
     parser.add_argument('-num_fold', default=10)
-    parser.add_argument('-seeds', default=[0, 6])
-    parser.add_argument('-res_dir', default='./result_score_fill_0')
+    parser.add_argument('-seeds', default=[0,1])
+    parser.add_argument('-res_dir', default='./result_fill_0')
     args = parser.parse_args()
     return args
 
@@ -123,7 +123,7 @@ def run_experiments(args):
             count += 1
 
         print(record_scores)
-        record_file = os.path.join(args.res_dir, 'score_metric_seed'+str(seed)+'.txt')
+        record_file = args.res_dir+'_score_metric_seed'+str(seed)+'.txt'
         np.savetxt(record_file, record_scores, fmt='%1.4f')
 
 

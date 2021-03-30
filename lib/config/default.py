@@ -36,11 +36,7 @@ config.DATASET.DATASET_DIR = ''
 config.DATASET.DATA_DIR = ''
 config.DATASET.TRAIN_SPLIT = ''
 config.DATASET.VAL_SPLIT = ''
-config.DATASET.CATEGORY_NAME = []
 config.DATASET.CLS_NUM = 1
-config.DATASET.CATEGORY_IDX = []
-config.DATASET.NUM_SEGMENTS = 1
-config.DATASET.GT_FILE = ''
 
 # network
 config.NETWORK = edict()
@@ -59,37 +55,13 @@ config.TRAIN.OUTPUT_DIR = ''
 config.TRAIN.BATCH_SIZE = 1
 config.TRAIN.LR_DECAY_EPOCHS = []
 config.TRAIN.LR_DECAY_FACTOR = 1
-config.TRAIN.SPARSITY_COEF = 1
-config.TRAIN.C_LOSS_NORM = 1
-config.TRAIN.LOSS_CAS_COEF = 1
-config.TRAIN.LOSS_CAM_COEF = 1
-config.TRAIN.LOSS_CONSISTENCY_COEF = 1
 
 # test
 config.TEST = edict()
 config.TEST.BATCH_SIZE = 1
 config.TEST.EVAL_INTERVAL = 1
-config.TEST.EVAL_EPOCHS = []
-config.TEST.CLS_SCORE_TH = 0
-config.TEST.CONTEXT_SIZE = 1
-config.TEST.VIDEO_CLS_WEIGHT = 1
+config.TEST.CLS_SCORE_TH = 0.5
 config.TEST.RESULT_DIR = ''
-# on THUMOS14, most videos are 30 fps. But there are some  particular case
-# record their fps, and dispose specifically
-config.TEST.VIDEOS_25FPS = []
-config.TEST.VIDEOS_24FPS = []
-config.TEST.ACT_THRESH_MIN = 0
-config.TEST.ACT_THRESH_MAX = 1
-config.TEST.ACT_THRESH_STEP = 1
-config.TEST.NMS_THRESHOLD = 1
-# for an action proposal, we expand it to obtain the outer region
-# config.TEST.OUTER_LAMBDA controls the expand scales
-config.TEST.OUTER_LAMBDA = 0
-# when calculate confidence score, we fuse proposal score (i.e., inner_s - outer-s) with classification score
-# config.TEST.CONF_GAMMA balance these two scores
-config.TEST.CONF_GAMMA = 0
-config.TEST.IOU_TH = []
-
 
 
 def _update_dict(k, v):
@@ -114,7 +86,7 @@ def update_config(cfg_file):
 
 
 if __name__ == '__main__':
-    cfg_file = '../../experiments/wtal.yaml'
+    cfg_file = '../../experiments/IENet.yaml'
     update_config(cfg_file)
     print(config)
 

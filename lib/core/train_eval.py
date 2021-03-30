@@ -1,11 +1,11 @@
 import torch
-import numpy as np
-
 
 dtype = torch.cuda.FloatTensor() if torch.cuda.is_available() else torch.FloatTensor()
 dtypel = torch.cuda.LongTensor() if torch.cuda.is_available() else torch.LongTensor()
 
 from sklearn.metrics import accuracy_score, recall_score, precision_score, f1_score, roc_auc_score
+
+
 def train(cfg, data_loader, model, optimizer, criterion):
     model.train()
 

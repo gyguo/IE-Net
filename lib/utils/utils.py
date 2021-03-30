@@ -3,19 +3,7 @@ import numpy as np
 import random
 import os
 import shutil
-import math
-import torch.nn.init as init
-import torch.nn as nn
 
-
-#
-# def weight_init(m):
-#     if isinstance(m, nn.Conv1d):
-#         init.kaiming_uniform_(m.weight, a=math.sqrt(5))
-#         if m.bias is not None:
-#             fan_in, _ = init._calculate_fan_in_and_fan_out(m.weight)
-#             bound = 1 / math.sqrt(fan_in)
-#             init.uniform_(m.bias, -bound, bound)
 
 def fix_random_seed(seed):
     torch.manual_seed(seed)
@@ -61,10 +49,12 @@ def load_weights(model, weight_file):
 
 
 def save_best_record_txt(info, file_path):
-    epoch, test_acc, recay, value_metric = info
+    epoch, acc, recall, auc, precision, f1 = info
 
     with open(file_path, "w") as f:
         f.write("Epoch: {}\n".format(epoch))
-        f.write("test_acc: {:.4f}\n".format(test_acc))
-        f.write("recay: {:.4f}\n".format(recay))
-        f.write("value_metric: {:.4f}\n".format(value_metric))
+        f.write("acc: {:.4f}\n".format(acc))
+        f.write("recall: {:.4f}\n".format(recall))
+        f.write("precision: {:.4f}\n".format(precision))
+        f.write("auc: {:.4f}\n".format(auc))
+        f.write("f1: {:.4f}\n".format(f1))

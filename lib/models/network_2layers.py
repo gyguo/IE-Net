@@ -2,9 +2,9 @@ import torch
 import torch.nn as nn
 
 
-class MissNet(nn.Module):
+class IENet(nn.Module):
     def __init__(self, cfg):
-        super(MissNet, self).__init__()
+        super(IENet, self).__init__()
         self.softmax = nn.Softmax(dim=0)
         self.sigmoid = nn.Sigmoid()
         self.fc_feat1 = nn.Linear(in_features=cfg.NETWORK.DATA_DIM, out_features=cfg.NETWORK.FEATURE_DIM)
@@ -41,15 +41,15 @@ class MissNet(nn.Module):
         
 if __name__ == '__main__':
     import sys
-    sys.path.insert(0, '/disk3/yangle/diagnose/code/lib')
+    sys.path.insert(0, '../../lib')
     from config.default import config as cfg
     from config.default import update_config
 
-    cfg_file = '/disk3/yangle/diagnose/code/experiments/MissNet.yaml'
+    cfg_file = '../../experiments/IENet.yaml'
     update_config(cfg_file)
 
     data = torch.randn((10, 97)).cuda()
-    network = MissNet(cfg).cuda()
+    network = IENet(cfg).cuda()
 
     score = network(data)
     print(score.size(), score)

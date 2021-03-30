@@ -6,10 +6,10 @@ import os
 
 def args_parser():
     parser = argparse.ArgumentParser(description='dispose raw excell data')
-    parser.add_argument('-ori_file', default='/disk3/yangle/diagnose/code/data/dataset.xlsx')
+    parser.add_argument('-ori_file', default='../data/dataset/dataset.xlsx')
     parser.add_argument('-num_feat', default=98)
     parser.add_argument('-max_item', default=90)
-    parser.add_argument('-res_dir', default='/disk3/yangle/diagnose/code/data/feature')
+    parser.add_argument('-res_dir', default='../data/feature')
     args = parser.parse_args()
     return args
 
