@@ -59,7 +59,4 @@ Recently, we introduce F1-score as the metric for selecting the best model, **th
 | ---------- | :--------: | :------------: | :------------: | :--------: | :--------: |
 | Results F1 | 94.05±2.17 | **95.99±3.69** | **94.42±2.26** | 90.50±3.76 | 93.81±2.52 |
 
-## gitee
-
-code has also been released in [gitee](https://gitee.com/gyguo95/IE-Net)
 
